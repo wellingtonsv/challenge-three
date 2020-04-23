@@ -6,6 +6,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+<<<<<<< HEAD
 	<classpathentry kind="src" path="resource"/>
+=======
+>>>>>>> branch 'jogo' of https://github.com/SelecaoGlobocom/wellington-vieira.git
 	<classpathentry kind="output" path="bin"/>
 </classpath>
