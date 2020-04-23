@@ -37,8 +37,11 @@ public class Acao {
 			if (dano.doubleValue() <= 0.0) {
 				return 0;
 			}
-			BigDecimal energiaRestante = energia.subtract(dano);
 			System.out.println("Normal - " + dano.intValue() + " HP");
+			BigDecimal energiaRestante = energia.subtract(dano);
+			if(energiaRestante.doubleValue() <= 0.0) {
+				return 0;
+			}
 			return energiaRestante.intValue();
 		}
 
@@ -54,9 +57,12 @@ public class Acao {
 			if (dano.doubleValue() <= 0.0) {
 				return 0;
 			}
-			BigDecimal resultadoEnergia = energia.subtract(dano);
 			System.out.println("Sorte!!! - " + dano.intValue() + " HP");
-			return resultadoEnergia.intValue();
+			BigDecimal energiaRestante = energia.subtract(dano);
+			if(energiaRestante.doubleValue() <= 0.0) {
+				return 0;
+			}
+			return energiaRestante.intValue();
 		}
 
 		if (fator >= 97 && fator <= 100) {
@@ -71,8 +77,11 @@ public class Acao {
 			if (dano.doubleValue() <= 0.0) {
 				return 0;
 			}
-			BigDecimal resultadoEnergia = energia.subtract(dano);
 			System.out.println("Crítico! - " + dano.intValue() + " HP");
+			BigDecimal resultadoEnergia = energia.subtract(dano);
+			if(resultadoEnergia.doubleValue() <= 0.0) {
+				return 0;
+			}
 			return resultadoEnergia.intValue();
 		}
 		return p.getPontosDeEnergia();

@@ -48,7 +48,11 @@ public class ArenaControle {
 			System.out.println("Batalha entre " + personagem1.getNome() + " e " + personagem2.getNome());
 
 			do {
-
+				
+				if (!personagem1.hasEnergia() | !personagem2.hasEnergia()) {
+					break;
+				} 
+				
 				if (personagem1.isAcao() && (rodada % 2 == 0)) {
 					System.out.println(personagem1.getNome() + " atacou " + personagem2.getNome());
 					int x = acao.ataque(personagem2);
@@ -64,10 +68,11 @@ public class ArenaControle {
 					personagem2.setAcao(false);
 					personagem1.setAcao(true);
 				}
-				rodada++;
+				
 				if (!personagem1.hasEnergia() | !personagem2.hasEnergia()) {
 					break;
 				}
+				rodada++;
 			} while (true);
 
 			if (personagem1.getPontosDeEnergia() == 0) {
