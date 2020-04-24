@@ -47,48 +47,77 @@ public class ArenaControle {
 			personagem1.setAcao(true);
 			System.out.println("Batalha entre " + personagem1.getNome() + " e " + personagem2.getNome());
 
-			do {
-				
-				if (!personagem1.hasEnergia() | !personagem2.hasEnergia()) {
-					break;
-				} 
-				
-				if (personagem1.isAcao() && (rodada % 2 == 0)) {
-					System.out.println(personagem1.getNome() + " atacou " + personagem2.getNome());
-					int x = acao.ataque(personagem2);
-					personagem2.setPontosDeEnergia(x);
-					personagem1.setAcao(false);
-					personagem2.setAcao(true);
-				}
+			rodade(rodada);
 
-				if (personagem2.isAcao() && (rodada % 2 == 1)) {
-					System.out.println(personagem2.getNome() + " atacou " + personagem1.getNome());
-					int x = acao.ataque(personagem1);
-					personagem1.setPontosDeEnergia(x);
-					personagem2.setAcao(false);
-					personagem1.setAcao(true);
-				}
-				
-				if (!personagem1.hasEnergia() | !personagem2.hasEnergia()) {
-					break;
-				}
-				rodada++;
-			} while (true);
-
-			if (personagem1.getPontosDeEnergia() == 0) {
-				System.out.println("Jogo acabou, o vencedor foi " + personagem2.getNome() + " com HP restante de "
-						+ personagem2.getPontosDeEnergia());
-			} else {
-				System.out.println("Jogo acabou, o vencedor foi " + personagem1.getNome() + " com HP restante de "
-						+ personagem1.getPontosDeEnergia());
-			}
+			verificaVencedor();
 
 		} catch (InputMismatchException ime) {
 			System.err.println("Só é permido número na energia ou no poder!\n");
 			return;
 		} catch (ErroIntenoException erie) {
-			System.err.println("Só é permido número na energia ou no poder!\n");
-			return;
+			throw new ErroIntenoException(erie);
 		}
+	}
+
+	private void rodade(int rodada) throws ErroIntenoException {
+		
+		do {
+			
+			if (!personagem1.hasEnergia() | !personagem2.hasEnergia()) {
+				break;
+			} 
+			
+			if (personagem1.isAcao() && (rodada % 2 == 0)) {
+				System.out.println(personagem1.getNome() + " atacou " + personagem2.getNome());
+				int x = acao.ataque(personagem2);
+				personagem2.setPontosDeEnergia(x);
+				personagem1.setAcao(false);
+				personagem2.setAcao(true);
+			}
+
+			if (personagem2.isAcao() && (rodada % 2 == 1)) {
+				System.out.println(personagem2.getNome() + " atacou " + personagem1.getNome());
+				int x = acao.ataque(personagem1);
+				personagem1.setPontosDeEnergia(x);
+				personagem2.setAcao(false);
+				personagem1.setAcao(true);
+			}
+			
+			if (!personagem1.hasEnergia() | !personagem2.hasEnergia()) {
+				break;
+			}
+			
+			rodada++;
+		} while (true);
+	}
+	
+	public void verificaVencedor() {
+		if (personagem1.getPontosDeEnergia() == 0) {
+			System.out.println("Jogo acabou, o vencedor foi " + personagem2.getNome() + " com HP restante de "
+					+ personagem2.getPontosDeEnergia());
+		} else {
+			System.out.println("Jogo acabou, o vencedor foi " + personagem1.getNome() + " com HP restante de "
+					+ personagem1.getPontosDeEnergia());
+		}
+	}
+
+	public Personagem getPersonagem1() {
+		return personagem1;
+	}
+
+	public void setPersonagem1(Personagem personagem1) {
+		this.personagem1 = personagem1;
+	}
+
+	public Personagem getPersonagem2() {
+		return personagem2;
+	}
+
+	public void setPersonagem2(Personagem personagem2) {
+		this.personagem2 = personagem2;
+	}
+
+	public Acao getAcao() {
+		return acao;
 	}
 }

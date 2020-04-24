@@ -17,73 +17,81 @@ public class Acao {
 	}
 
 	private int calculaAtaque(Personagem p) throws ErroIntenoException {
+		
+		if(null == p) {
+			throw new ErroIntenoException("Personagem no estado invalido");
+		}
+		
 		Random gerador = new Random();
-		if (!ehModuloTeste) {
-			fator = gerador.nextInt(100);
-		}
-
-		if (fator >= 0 && fator <= 15) {
-			System.out.println("Errou - 0 HP");
-			return p.getPontosDeEnergia();
-		}
-
-		if (fator >= 16 && fator <= 70) {
-			BigDecimal umTerco = new BigDecimal(0.33);
-			BigDecimal energia = new BigDecimal(p.getPontosDeEnergia());
-			if (energia.doubleValue() <= 0.0) {
-				return 0;
+		try {
+			if (!ehModuloTeste) {
+				fator = gerador.nextInt(100);
 			}
-			BigDecimal poder = new BigDecimal(p.getPontosdePoder());
-			BigDecimal dano = (poder.multiply(umTerco));
-			if (dano.doubleValue() <= 0.0) {
-				return 0;
+			
+			if (fator >= 0 && fator <= 15) {
+				System.out.println("Errou - 0 HP");
+				return p.getPontosDeEnergia();
 			}
-			System.out.println("Normal - " + dano.intValue() + " HP");
-			BigDecimal energiaRestante = energia.subtract(dano);
-			if(energiaRestante.doubleValue() <= 0.0) {
-				return 0;
+			if (fator >= 16 && fator <= 70) {
+				BigDecimal umTerco = new BigDecimal(0.33);
+				BigDecimal energia = new BigDecimal(p.getPontosDeEnergia());
+				if (energia.doubleValue() <= 0.0) {
+					return 0;
+				}
+				BigDecimal poder = new BigDecimal(p.getPontosdePoder());
+				BigDecimal dano = (poder.multiply(umTerco));
+				if (dano.doubleValue() <= 0.0) {
+					return 0;
+				}
+				System.out.println("Normal - " + dano.intValue() + " HP");
+				BigDecimal energiaRestante = energia.subtract(dano);
+				if (energiaRestante.doubleValue() <= 0.0) {
+					return 0;
+				}
+				return energiaRestante.intValue();
 			}
-			return energiaRestante.intValue();
-		}
-
-		if (fator >= 71 && fator <= 96) {
-			BigDecimal umTerco = new BigDecimal(0.33);
-			BigDecimal vintePorCento = new BigDecimal(0.20);
-			BigDecimal energia = new BigDecimal(p.getPontosDeEnergia());
-			if (energia.doubleValue() <= 0.0) {
-				return 0;
+			if (fator >= 71 && fator <= 96) {
+				BigDecimal umTerco = new BigDecimal(0.33);
+				BigDecimal vintePorCento = new BigDecimal(0.20);
+				BigDecimal energia = new BigDecimal(p.getPontosDeEnergia());
+				if (energia.doubleValue() <= 0.0) {
+					return 0;
+				}
+				BigDecimal poder = new BigDecimal(p.getPontosdePoder());
+				BigDecimal dano = (poder.multiply((umTerco.add(vintePorCento))));
+				if (dano.doubleValue() <= 0.0) {
+					return 0;
+				}
+				System.out.println("Sorte!!! - " + dano.intValue() + " HP");
+				BigDecimal energiaRestante = energia.subtract(dano);
+				if (energiaRestante.doubleValue() <= 0.0) {
+					return 0;
+				}
+				return energiaRestante.intValue();
 			}
-			BigDecimal poder = new BigDecimal(p.getPontosdePoder());
-			BigDecimal dano = (poder.multiply((umTerco.add(vintePorCento))));
-			if (dano.doubleValue() <= 0.0) {
-				return 0;
-			}
-			System.out.println("Sorte!!! - " + dano.intValue() + " HP");
-			BigDecimal energiaRestante = energia.subtract(dano);
-			if(energiaRestante.doubleValue() <= 0.0) {
-				return 0;
-			}
-			return energiaRestante.intValue();
-		}
-
-		if (fator >= 97 && fator <= 100) {
-			BigDecimal umTerco = new BigDecimal(0.33);
-			BigDecimal quarentaPorCento = new BigDecimal(0.40);
-			BigDecimal energia = new BigDecimal(p.getPontosDeEnergia());
-			BigDecimal poder = new BigDecimal(p.getPontosdePoder());
-			if (energia.doubleValue() <= 0.0) {
-				return 0;
-			}
-			BigDecimal dano = (poder.multiply((umTerco.add(quarentaPorCento))));
-			if (dano.doubleValue() <= 0.0) {
-				return 0;
-			}
-			System.out.println("Crítico! - " + dano.intValue() + " HP");
-			BigDecimal resultadoEnergia = energia.subtract(dano);
-			if(resultadoEnergia.doubleValue() <= 0.0) {
-				return 0;
-			}
-			return resultadoEnergia.intValue();
+			if (fator >= 97 && fator <= 100) {
+				BigDecimal umTerco = new BigDecimal(0.33);
+				BigDecimal quarentaPorCento = new BigDecimal(0.40);
+				BigDecimal energia = new BigDecimal(p.getPontosDeEnergia());
+				BigDecimal poder = new BigDecimal(p.getPontosdePoder());
+				if (energia.doubleValue() <= 0.0) {
+					return 0;
+				}
+				BigDecimal dano = (poder.multiply((umTerco.add(quarentaPorCento))));
+				if (dano.doubleValue() <= 0.0) {
+					return 0;
+				}
+				System.out.println("Crítico! - " + dano.intValue() + " HP");
+				BigDecimal resultadoEnergia = energia.subtract(dano);
+				if (resultadoEnergia.doubleValue() <= 0.0) {
+					return 0;
+				}
+				return resultadoEnergia.intValue();
+			} 
+		}catch (Exception e) {
+			throw new ErroIntenoException("Erro interno no jogo!",e);
+		} finally {
+			fator = 0;
 		}
 		return p.getPontosDeEnergia();
 	}

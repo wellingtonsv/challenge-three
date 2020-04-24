@@ -7,6 +7,16 @@ public class Personagem {
 	private int pontosdePoder;
 	private boolean acao;
 
+	public Personagem() {
+
+	}
+
+	public Personagem(String nome, int pontosDeEnergia, int pontosdePoder) {
+		this.nome = nome;
+		this.pontosDeEnergia = pontosDeEnergia;
+		this.pontosdePoder = pontosDeEnergia;
+	}
+
 	public String getNome() {
 		return nome;
 	}
